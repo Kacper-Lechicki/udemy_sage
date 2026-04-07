@@ -1,0 +1,63 @@
+[project]
+name = "udemy-sage"
+version = "0.1.0"
+description = "CLI tool that generates Obsidian notes from Udemy course subtitles using AI."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [{ name = "Kacper Lechicki" }]
+
+dependencies = [
+    "browser-cookie3>=0.12",
+    "questionary>=2.0",
+    "rich>=13.0",
+]
+
+[project.optional-dependencies]
+openai = ["openai>=1.0"]
+anthropic = ["anthropic>=0.20"]
+gemini = ["google-genai>=1.0"]
+all = [
+    "openai>=1.0",
+    "anthropic>=0.20",
+    "google-genai>=1.0",
+]
+
+[project.scripts]
+udemy-sage = "udemy_sage.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.mypy]
+python_version = "3.11"
+mypy_path = "src"
+namespace_packages = true
+explicit_package_bases = true
+
+[tool.pylint."messages control"]
+# Test modules and small helpers rarely benefit from per-class/method docstrings.
+disable = [
+    "missing-class-docstring",
+    "missing-function-docstring",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.20.0",
+    "pip-audit>=2.7",
+    "pytest>=9.0.3",
+    "ruff>=0.15.9",
+]
